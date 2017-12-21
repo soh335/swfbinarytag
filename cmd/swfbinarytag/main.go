@@ -2,10 +2,10 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 
+	"github.com/pkg/errors"
 	"github.com/soh335/swfbinarytag"
 )
 
@@ -25,23 +25,23 @@ func main() {
 func _main() error {
 	input, err := os.Open(*inputName)
 	if err != nil {
-		return fmt.Errorf("failed to open file:%s error:%s", *inputName, err.Error())
+		return errors.Wrapf(err, "failed to open file:%s", *inputName)
 	}
 	defer input.Close()
 
 	data, err := swfbinarytag.Find(input, uint16(*id))
 	if err != nil {
-		return fmt.Errorf("failed to find id:%d error:%s", *id, err.Error())
+		return errors.Wrapf(err, "failed to find id:%d", *id)
 	}
 
 	output, err := os.Create(*outputName)
 	if err != nil {
-		return fmt.Errorf("failed to open file:%s error:%s", *outputName, err.Error())
+		return errors.Wrapf(err, "failed to open file:%s", *outputName)
 	}
 
 	defer output.Close()
 	if _, err := output.Write(data); err != nil {
-		return fmt.Errorf("failed to write file:%s error:%s", *outputName, err.Error())
+		return errors.Wrapf(err, "failed to write file:%s", *outputName)
 	}
 
 	return nil
