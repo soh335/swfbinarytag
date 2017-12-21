@@ -1,0 +1,17 @@
+language: go
+
+go:
+  - 1.9
+  - tip
+
+before_script:
+  - go get -t
+  - sudo apt-get install -y swftools
+
+script:
+  - go test -v ./...
+  - go build ./cmd/...
+  - curl -o http://radiko.jp/apps/js/flash/myplayer-release.swf /tmp/myplayer-release.swf
+  - swfextract -b 12 /tmp/myplayer-release.swf -o /tmp/binary1.swf
+  - ./cmd/swfbinarytag/swfbinarytag -input /tmp/myplayer-release.swf -id 12 -o /tmp/binary2.swf
+  - diff /tmp/binary1.swf /tmp/binary2.swf
