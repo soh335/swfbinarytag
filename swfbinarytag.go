@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	OverflowErr = errors.New("overflow")
-	NotfoundErr = errors.New("not found")
+	overflowErr = errors.New("overflow")
+	notfoundErr = errors.New("not found")
 )
 
 const (
@@ -42,7 +42,7 @@ func (s *src) eof() bool {
 
 func (s *src) seekUI8() error {
 	if s.pos+1 > len(s.input) {
-		return OverflowErr
+		return overflowErr
 	}
 	s.pos = s.pos + 1
 	return nil
@@ -50,7 +50,7 @@ func (s *src) seekUI8() error {
 
 func (s *src) seekUI16() error {
 	if s.pos+2 > len(s.input) {
-		return OverflowErr
+		return overflowErr
 	}
 	s.pos = s.pos + 2
 	return nil
@@ -58,7 +58,7 @@ func (s *src) seekUI16() error {
 
 func (s *src) seekUI32() error {
 	if s.pos+4 > len(s.input) {
-		return OverflowErr
+		return overflowErr
 	}
 	s.pos = s.pos + 4
 	return nil
@@ -66,7 +66,7 @@ func (s *src) seekUI32() error {
 
 func (s *src) seekRect() error {
 	if s.pos+1 > len(s.input) {
-		return OverflowErr
+		return overflowErr
 	}
 
 	b := s.input[s.pos]
@@ -75,7 +75,7 @@ func (s *src) seekRect() error {
 	seekBytes := int(math.Ceil(float64(sumBits) / 8))
 
 	if s.pos+seekBytes > len(s.input) {
-		return OverflowErr
+		return overflowErr
 	}
 
 	s.pos = s.pos + seekBytes
@@ -85,7 +85,7 @@ func (s *src) seekRect() error {
 
 func (s *src) read(u int) ([]byte, error) {
 	if s.pos+u > len(s.input) {
-		return nil, OverflowErr
+		return nil, overflowErr
 	}
 	byts := s.input[s.pos : s.pos+u]
 	s.pos = s.pos + u
@@ -94,7 +94,7 @@ func (s *src) read(u int) ([]byte, error) {
 
 func (s *src) readUI8() (uint8, error) {
 	if s.pos+1 > len(s.input) {
-		return 0, OverflowErr
+		return 0, overflowErr
 	}
 
 	byt := s.input[s.pos]
@@ -104,7 +104,7 @@ func (s *src) readUI8() (uint8, error) {
 
 func (s *src) readUI16() (uint16, error) {
 	if s.pos+2 > len(s.input) {
-		return 0, OverflowErr
+		return 0, overflowErr
 	}
 
 	byts := s.input[s.pos : s.pos+2]
@@ -114,7 +114,7 @@ func (s *src) readUI16() (uint16, error) {
 
 func (s *src) readUI32() (uint32, error) {
 	if s.pos+4 > len(s.input) {
-		return 0, OverflowErr
+		return 0, overflowErr
 	}
 
 	byts := s.input[s.pos : s.pos+4]
@@ -172,7 +172,7 @@ func Find(r io.Reader, id uint16) ([]byte, error) {
 		}
 	}
 
-	return nil, NotfoundErr
+	return nil, notfoundErr
 }
 
 func parseHeader1(s *src) (uint8, error) {
