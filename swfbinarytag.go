@@ -152,6 +152,10 @@ func Find(r io.Reader, id uint16) ([]byte, error) {
 		return nil, errors.New("unknown type")
 	}
 
+	if err := parseHeader2(&s); err != nil {
+		return nil, errors.Wrap(err, "failed to parseHeader2")
+	}
+
 	for {
 		tag, err := parseTag(&s)
 		if err != nil {
