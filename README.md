@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/soh335/swfbinarytag.svg?branch=master)](https://travis-ci.org/soh335/swfbinarytag)
+
 # swfbinarytag
 
 Find binary tag by id from swf file. It's same as ```$ swfextract -b $id -o $output```.
