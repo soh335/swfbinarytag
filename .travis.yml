@@ -11,7 +11,7 @@ before_script:
 script:
   - go test -v ./...
   - go build ./cmd/...
-  - curl -o http://radiko.jp/apps/js/flash/myplayer-release.swf /tmp/myplayer-release.swf
+  - curl http://radiko.jp/apps/js/flash/myplayer-release.swf -o /tmp/myplayer-release.swf
   - swfextract -b 12 /tmp/myplayer-release.swf -o /tmp/binary1.swf
-  - ./cmd/swfbinarytag/swfbinarytag -input /tmp/myplayer-release.swf -id 12 -o /tmp/binary2.swf
+  - swfbinarytag -input /tmp/myplayer-release.swf -id 12 -o /tmp/binary2.swf
   - diff /tmp/binary1.swf /tmp/binary2.swf
