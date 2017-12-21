@@ -131,7 +131,7 @@ func Find(r io.Reader, id uint16) ([]byte, error) {
 	s.input = input
 	compreessed, err := parseHeader1(&s)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to parseHeader")
+		return nil, errors.Wrap(err, "failed to parseHeader1")
 	}
 	switch compreessed {
 	case zlibcompressed:
