@@ -139,6 +139,7 @@ func Find(r io.Reader, id uint16) ([]byte, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to initialize zlib reader")
 		}
+		defer zr.Close()
 		input, err := ioutil.ReadAll(zr)
 		if err != nil {
 			return nil, errors.Wrap(err, "failed to read zlib data")
